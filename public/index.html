@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Evaluator / Dev Helper Bar (Can be toggled or minimized) -->
+    <header class="reviewer-bar" id="reviewerBar">
+        <div class="reviewer-inner">
+            <span class="reviewer-badge">SRS Report Screens:</span>
+            <div class="screen-pills">
+                <button type="button" class="pill-btn active" onclick="switchWindow('login')">Fig 5.1: Login</button>
+                <button type="button" class="pill-btn" onclick="switchWindow('dashboard')">Fig 5.2: Dashboard</button>
+                <button type="button" class="pill-btn" onclick="switchWindow('view-properties')">Fig 5.3: View Properties</button>
+                <button type="button" class="pill-btn" onclick="switchWindow('add-property')">Fig 5.4: Add Property</button>
+                <button type="button" class="pill-btn" onclick="switchWindow('complete-details')">Fig 5.5: Complete Details</button>
+                <button type="button" class="pill-btn" onclick="switchWindow('edit-property')">Fig 5.6: Edit Property</button>
+                <button type="button" class="pill-btn" onclick="switchWindow('change-password')">Fig 5.7: Change Password</button>
+            </div>
+            <div class="reviewer-actions">
+                <span class="db-status-pill" id="dbStatusBadge">● Connecting...</span>
+                <button type="button" class="reset-db-btn" onclick="resetDbData()" title="Reset database to initial report data">Reset Demo Data</button>
+                <button type="button" class="toggle-bar-btn" onclick="toggleReviewerBar()" title="Hide/Show this bar">✕</button>
+            </div>
+        </div>
+    </header>
+    <button type="button" class="show-bar-tab" id="showBarTab" onclick="toggleReviewerBar()" title="Show Screen Switcher">☰ Screens</button>
+
+    <!-- Main Desktop Application Canvas -->
+    <main class="desktop-workspace">
+
+        <!-- ========================================================================= -->
+        <!-- FIGURE 5.1: LOGIN PAGE                                                   -->
+        <!-- ========================================================================= -->
+        <section class="desktop-window window-login active" id="win-login">
+            <div class="window-titlebar">
+                <div class="titlebar-title">Property Management - User Login</div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-min" title="Minimize">&#8212;</button>
+                    <button class="win-btn win-max" title="Maximize">&#9633;</button>
+                    <button class="win-btn win-close" title="Close">&#x2715;</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="banner-box">
+                    <img src="assets/poornima_banner.png" alt="Poornima Institute of Engineering & Technology" class="poornima-banner-img">
+                </div>
+
+                <h1 class="system-main-heading">PROPERTY MANAGEMENT SYSTEM</h1>
+                <h2 class="sub-screen-heading">USER LOGIN</h2>
+
+                <form class="login-form-container" id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group-vertical">
+                        <label for="loginEmail" class="field-label-block">Email</label>
+                        <input type="email" id="loginEmail" class="text-input-field" value="admin@poornima.org" required autofocus autocomplete="email">
+                    </div>
+
+                    <div class="form-group-vertical">
+                        <label for="loginPassword" class="field-label-block">Password</label>
+                        <input type="password" id="loginPassword" class="text-input-field" value="admin123" required autocomplete="current-password">
+                    </div>
+
+                    <div class="login-options-row">
+                        <a href="javascript:void(0)" class="forgot-link" onclick="openForgotPassword()">Forgot Password?</a>
+                    </div>
+
+                    <div class="login-action-row">
+                        <button type="submit" class="app-btn login-btn">LOGIN</button>
+                    </div>
+                </form>
+
+                <div class="quick-login-hint">
+                    Default login: <strong>admin@poornima.org</strong> / <strong>admin123</strong>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- FIGURE 5.2: DASHBOARD PAGE                                               -->
+        <!-- ========================================================================= -->
+        <section class="desktop-window window-dashboard" id="win-dashboard">
+            <div class="window-titlebar">
+                <div class="titlebar-title">Property Management System - Dashboard</div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-min" title="Minimize">&#8212;</button>
+                    <button class="win-btn win-max" title="Maximize">&#9633;</button>
+                    <button class="win-btn win-close" title="Close" onclick="handleLogout()">&#x2715;</button>
+                </div>
+            </div>
+            <div class="window-body dashboard-body">
+                <div class="banner-box">
+                    <img src="assets/poornima_banner.png" alt="Poornima Institute of Engineering & Technology" class="poornima-banner-img">
+                </div>
+
+                <h1 class="system-main-heading">PROPERTY MANAGEMENT SYSTEM</h1>
+
+                <div class="dashboard-content-split">
+                    <!-- Left Sidebar Panel -->
+                    <aside class="dashboard-sidebar">
+                        <button type="button" class="app-btn sidebar-btn" onclick="openAddProperty()">Add Property</button>
+                        <button type="button" class="app-btn sidebar-btn" onclick="openViewProperties()">View Properties</button>
+                        <button type="button" class="app-btn sidebar-btn" onclick="openChangePassword()">Change Password</button>
+                        <button type="button" class="app-btn sidebar-btn" onclick="handleLogout()">Logout</button>
+                    </aside>
+
+                    <!-- Right White Card -->
+                    <section class="dashboard-about-card">
+                        <h2 class="about-title">About Property Management System</h2>
+                        <p class="about-text">
+                            The Property Management System is a desktop application designed to organize property records.
+                            It provides options to add new properties, view registered properties, inspect complete
+                            details, edit existing records and change account passwords. Property information is stored in
+                            a MySQL database.
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- FIGURE 5.3: VIEW PROPERTIES PAGE                                         -->
+        <!-- ========================================================================= -->
+        <section class="desktop-window window-view-properties" id="win-view-properties">
+            <div class="window-titlebar">
+                <div class="titlebar-title">View Properties - Property Management System</div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-min" title="Minimize">&#8212;</button>
+                    <button class="win-btn win-max" title="Maximize">&#9633;</button>
+                    <button class="win-btn win-close" title="Close" onclick="backToDashboard()">&#x2715;</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h1 class="system-main-heading">REGISTERED PROPERTIES</h1>
+
+                <div class="table-container">
+                    <table class="properties-table" id="propertiesTable">
+                        <thead>
+                            <tr>
+                                <th>Property ID</th>
+                                <th>Property Title</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="propertiesTableBody">
+                            <!-- Populated dynamically via JS matching Fig 5.3 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-actions-row">
+                    <button type="button" class="app-btn table-action-btn" onclick="handleViewCompleteDetails()">View Complete Details</button>
+                    <button type="button" class="app-btn table-action-btn" onclick="handleEditDetails()">Edit Details</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- FIGURE 5.4: ADD PROPERTY PAGE                                            -->
+        <!-- ========================================================================= -->
+        <section class="desktop-window window-form-screen" id="win-add-property">
+            <div class="window-titlebar">
+                <div class="titlebar-title">Add Property</div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-min" title="Minimize">&#8212;</button>
+                    <button class="win-btn win-max" title="Maximize">&#9633;</button>
+                    <button class="win-btn win-close" title="Close" onclick="backToDashboard()">&#x2715;</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h1 class="system-main-heading">ADD NEW PROPERTY</h1>
+
+                <form class="kv-form-container" id="addPropertyForm" onsubmit="handleAddProperty(event)">
+                    <div class="kv-form-row">
+                        <label for="addPropId" class="kv-label">Property ID:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="addPropId" class="text-input-field" placeholder="PROP-005" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="addPropTitle" class="kv-label">Property Title:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="addPropTitle" class="text-input-field" placeholder="e.g. 3 BHK Luxury Flat" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="addOwnerName" class="kv-label">Owner Name:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="addOwnerName" class="text-input-field" placeholder="e.g. Rajesh Sharma" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="addContactNo" class="kv-label">Contact No:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="addContactNo" class="text-input-field" placeholder="e.g. 9829012345" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="addLocation" class="kv-label">Location:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="addLocation" class="text-input-field" placeholder="e.g. Tonk Road, Jaipur" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="addPrice" class="kv-label">Price (in ₹):</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="addPrice" class="text-input-field" placeholder="e.g. 5500000" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label class="kv-label">Property Type:</label>
+                        <div class="kv-radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="addPropertyType" value="Residential" checked>
+                                <span>Residential</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="addPropertyType" value="Commercial">
+                                <span>Commercial</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label class="kv-label">Status:</label>
+                        <div class="kv-radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="addStatus" value="Available" checked>
+                                <span>Available</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="addStatus" value="Sold">
+                                <span>Sold</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-center-btn-row">
+                        <button type="submit" class="app-btn form-action-btn">ADD</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- FIGURE 5.5: COMPLETE PROPERTY DETAILS PAGE                               -->
+        <!-- ========================================================================= -->
+        <section class="desktop-window window-form-screen" id="win-complete-details">
+            <div class="window-titlebar">
+                <div class="titlebar-title">Complete Property Details</div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-min" title="Minimize">&#8212;</button>
+                    <button class="win-btn win-max" title="Maximize">&#9633;</button>
+                    <button class="win-btn win-close" title="Close" onclick="closeDetailsWindow()">&#x2715;</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h1 class="system-main-heading">COMPLETE PROPERTY DETAILS</h1>
+
+                <div class="kv-form-container readonly-container">
+                    <div class="kv-form-row">
+                        <label class="kv-label">Property ID:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="viewPropId" class="text-input-field" readonly>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label class="kv-label">Property Title:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="viewPropTitle" class="text-input-field" readonly>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label class="kv-label">Owner Name:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="viewOwnerName" class="text-input-field" readonly>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label class="kv-label">Contact No:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="viewContactNo" class="text-input-field" readonly>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label class="kv-label">Location:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="viewLocation" class="text-input-field" readonly>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label class="kv-label">Price:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="viewPrice" class="text-input-field" readonly>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label class="kv-label">Property Type:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="viewPropertyType" class="text-input-field" readonly>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label class="kv-label">Status:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="viewStatus" class="text-input-field" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-center-btn-row">
+                        <button type="button" class="app-btn form-action-btn" onclick="closeDetailsWindow()">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- FIGURE 5.6: EDIT PROPERTY DETAILS PAGE                                   -->
+        <!-- ========================================================================= -->
+        <section class="desktop-window window-form-screen" id="win-edit-property">
+            <div class="window-titlebar">
+                <div class="titlebar-title">Edit Property Details</div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-min" title="Minimize">&#8212;</button>
+                    <button class="win-btn win-max" title="Maximize">&#9633;</button>
+                    <button class="win-btn win-close" title="Close" onclick="closeEditWindow()">&#x2715;</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h1 class="system-main-heading">EDIT PROPERTY DETAILS</h1>
+
+                <form class="kv-form-container" id="editPropertyForm" onsubmit="handleUpdateProperty(event)">
+                    <div class="kv-form-row">
+                        <label for="editPropId" class="kv-label">Property ID:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="editPropId" class="text-input-field" readonly title="Property ID cannot be changed">
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="editPropTitle" class="kv-label">Property Title:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="editPropTitle" class="text-input-field" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="editOwnerName" class="kv-label">Owner Name:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="editOwnerName" class="text-input-field" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="editContactNo" class="kv-label">Contact No:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="editContactNo" class="text-input-field" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="editLocation" class="kv-label">Location:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="editLocation" class="text-input-field" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="editPrice" class="kv-label">Price:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="editPrice" class="text-input-field" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="editPropertyType" class="kv-label">Property Type:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="editPropertyType" class="text-input-field" placeholder="Residential or Commercial" required>
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="editStatus" class="kv-label">Status:</label>
+                        <div class="kv-input-wrap">
+                            <input type="text" id="editStatus" class="text-input-field" placeholder="Available or Sold" required>
+                        </div>
+                    </div>
+
+                    <div class="form-center-btn-row">
+                        <button type="submit" class="app-btn form-action-btn">UPDATE</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+        <!-- ========================================================================= -->
+        <!-- FIGURE 5.7: CHANGE PASSWORD PAGE                                         -->
+        <!-- ========================================================================= -->
+        <section class="desktop-window window-form-screen" id="win-change-password">
+            <div class="window-titlebar">
+                <div class="titlebar-title">Change Password</div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-min" title="Minimize">&#8212;</button>
+                    <button class="win-btn win-max" title="Maximize">&#9633;</button>
+                    <button class="win-btn win-close" title="Close" onclick="closeChangePassword()">&#x2715;</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <h1 class="system-main-heading">CHANGE PASSWORD</h1>
+
+                <form class="kv-form-container" id="changePasswordForm" onsubmit="handleChangePassword(event)">
+                    <div class="kv-form-row">
+                        <label for="cpEmail" class="kv-label">Email ID:</label>
+                        <div class="kv-input-wrap">
+                            <input type="email" id="cpEmail" class="text-input-field" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="cpCurrentPass" class="kv-label">Current Password:</label>
+                        <div class="kv-input-wrap">
+                            <input type="password" id="cpCurrentPass" class="text-input-field" required autocomplete="current-password">
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="cpNewPass" class="kv-label">New Password:</label>
+                        <div class="kv-input-wrap">
+                            <input type="password" id="cpNewPass" class="text-input-field" required autocomplete="new-password">
+                        </div>
+                    </div>
+
+                    <div class="kv-form-row">
+                        <label for="cpConfirmPass" class="kv-label">Confirm New Password:</label>
+                        <div class="kv-input-wrap">
+                            <input type="password" id="cpConfirmPass" class="text-input-field" required autocomplete="new-password">
+                        </div>
+                    </div>
+
+                    <div class="form-center-btn-row">
+                        <button type="submit" class="app-btn form-action-btn">UPDATE</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Native Desktop-Style Message Dialog (JOptionPane style) -->
+    <div class="modal-dialog-backdrop" id="customDialogBackdrop">
+        <div class="desktop-dialog-window">
+            <div class="window-titlebar dialog-titlebar">
+                <div class="titlebar-title" id="dialogTitle">Message</div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-close" onclick="closeDialog()">&#x2715;</button>
+                </div>
+            </div>
+            <div class="dialog-content">
+                <div class="dialog-icon-col" id="dialogIconCol">
+                    <span class="dialog-icon info-icon">ℹ</span>
+                </div>
+                <div class="dialog-message-col" id="dialogMessage">
+                    Operation completed successfully.
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button type="button" class="app-btn dialog-ok-btn" onclick="closeDialog()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

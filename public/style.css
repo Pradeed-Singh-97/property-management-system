@@ -1,0 +1,729 @@
+/* ==========================================================================
+   PROPERTY MANAGEMENT SYSTEM - EXACT UI/UX STYLING
+   Accurately recreated from SRS Report Chapter 5 (Figures 5.1 - 5.7)
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    background-color: #d1d5db; /* Desktop neutral wallpaper */
+    color: #222222;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    user-select: none;
+}
+
+/* ==========================================================================
+   TOP REVIEWER TOOLBAR (Allows instant 1-click verification of all Figures)
+   ========================================================================== */
+.reviewer-bar {
+    background: #1e293b;
+    color: #f8fafc;
+    padding: 8px 16px;
+    font-size: 13px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease;
+}
+
+.reviewer-bar.hidden {
+    transform: translateY(-100%);
+    position: absolute;
+}
+
+.reviewer-inner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.reviewer-badge {
+    font-weight: 700;
+    color: #93c5fd;
+    white-space: nowrap;
+}
+
+.screen-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+}
+
+.pill-btn {
+    background: #334155;
+    color: #e2e8f0;
+    border: 1px solid #475569;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.pill-btn:hover {
+    background: #475569;
+    color: #ffffff;
+}
+
+.pill-btn.active {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #3b82f6;
+    font-weight: 600;
+}
+
+.reviewer-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.db-status-pill {
+    font-size: 11.5px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    background: #064e3b;
+    color: #6ee7b7;
+    font-weight: 600;
+}
+
+.reset-db-btn {
+    background: #e11d48;
+    color: #ffffff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11.5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.reset-db-btn:hover {
+    background: #be123c;
+}
+
+.toggle-bar-btn {
+    background: transparent;
+    color: #94a3b8;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.toggle-bar-btn:hover {
+    color: #ffffff;
+}
+
+.show-bar-tab {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 20px;
+    background: #1e293b;
+    color: #93c5fd;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 0 0 6px 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.reviewer-bar.hidden + .show-bar-tab {
+    display: block;
+}
+
+/* ==========================================================================
+   DESKTOP WORKSPACE & WINDOW CONTAINERS
+   ========================================================================== */
+.desktop-workspace {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px 45px 20px;
+    position: relative;
+}
+
+/* Main Window Box */
+.desktop-window {
+    display: none;
+    background: #eeeeee; /* Exact desktop window background from PDF */
+    border: 1px solid #b0bec5;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+    position: relative;
+    user-select: text;
+    border-radius: 2px;
+    animation: fadeInWindow 0.2s ease-out;
+}
+
+.desktop-window.active {
+    display: block;
+}
+
+@keyframes fadeInWindow {
+    from {
+        opacity: 0.85;
+        transform: scale(0.995);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ==========================================================================
+   WINDOW TITLE BAR (Exact Windows / Desktop App Frame)
+   ========================================================================== */
+.window-titlebar {
+    height: 34px;
+    background: #f7f8fa; /* Light grey window header from screenshots */
+    border-bottom: 1px solid #d4d7db;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 14px;
+    user-select: none;
+}
+
+.titlebar-title {
+    font-size: 13px;
+    color: #212529;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+}
+
+.titlebar-controls {
+    display: flex;
+    height: 100%;
+}
+
+.win-btn {
+    width: 44px;
+    height: 100%;
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.15s ease;
+}
+
+.win-btn:hover {
+    background: #e5e7eb;
+}
+
+.win-btn.win-close:hover {
+    background: #e81123;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   WINDOW BODY CONTENT & TYPOGRAPHY
+   ========================================================================== */
+.window-body {
+    padding: 35px 50px 50px 50px;
+    background-color: #eeeeee;
+}
+
+/* Banner Box */
+.banner-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.poornima-banner-img {
+    max-width: 580px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background-color: #ffffff;
+}
+
+/* Main Headings */
+.system-main-heading {
+    color: #1d3557; /* Deep Navy Blue from screenshots */
+    font-size: 21px;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 15px;
+    margin-bottom: 18px;
+}
+
+.sub-screen-heading {
+    color: #111827;
+    font-size: 16px;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 30px;
+}
+
+/* Common Button Styling (Recreated identically from Figures) */
+.app-btn {
+    background: #cfe0f2; /* Soft pale ice-blue */
+    border: 1px solid #7b9cc0; /* Distinct blue-slate border */
+    color: #1f3752; /* Dark slate text */
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    outline: none;
+}
+
+.app-btn:hover {
+    background: #bed5ec;
+    border-color: #6a8db3;
+}
+
+.app-btn:active {
+    background: #abc8e4;
+}
+
+/* Common Text Input Styling */
+.text-input-field {
+    width: 100%;
+    height: 44px;
+    background: #ffffff;
+    border: 1px solid #7d96b0;
+    border-radius: 4px;
+    padding: 0 12px;
+    font-size: 14.5px;
+    color: #111827;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.text-input-field:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px #2563eb;
+}
+
+.text-input-field[readonly] {
+    background-color: #ffffff;
+    color: #222222;
+    cursor: default;
+}
+
+
+/* ==========================================================================
+   FIGURE 5.1: LOGIN WINDOW SPECIFICS
+   ========================================================================== */
+.window-login {
+    width: 820px;
+    max-width: 95vw;
+}
+
+.login-form-container {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.form-group-vertical {
+    margin-bottom: 22px;
+}
+
+.field-label-block {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.login-options-row {
+    margin-top: 14px;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.forgot-link {
+    color: #1d4ed8;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+.login-action-row {
+    display: flex;
+    justify-content: flex-end; /* LOGIN button aligned right per Fig 5.1 */
+}
+
+.login-btn {
+    height: 50px;
+    width: 160px;
+    font-size: 14.5px;
+}
+
+.quick-login-hint {
+    margin-top: 35px;
+    text-align: center;
+    font-size: 12.5px;
+    color: #64748b;
+}
+
+
+/* ==========================================================================
+   FIGURE 5.2: DASHBOARD WINDOW SPECIFICS
+   ========================================================================== */
+.window-dashboard {
+    width: 1300px;
+    max-width: 96vw;
+}
+
+.dashboard-body {
+    padding-bottom: 50px;
+}
+
+.dashboard-content-split {
+    display: flex;
+    gap: 26px;
+    margin-top: 30px;
+    align-items: stretch;
+}
+
+.dashboard-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background: #dae3ec; /* Distinct light bluish-gray sidebar */
+    border: 1px solid #bdcddc;
+    border-radius: 8px;
+    padding: 26px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar-btn {
+    width: 100%;
+    height: 52px;
+    font-size: 14.5px;
+    letter-spacing: 0.2px;
+}
+
+.dashboard-about-card {
+    flex: 1;
+    background: #ffffff;
+    border: 1px solid #b0bec5;
+    border-radius: 8px;
+    padding: 35px 40px;
+    min-height: 340px;
+}
+
+.about-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 22px;
+}
+
+.about-text {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #334155;
+}
+
+
+/* ==========================================================================
+   FIGURE 5.3: VIEW PROPERTIES WINDOW SPECIFICS
+   ========================================================================== */
+.window-view-properties {
+    width: 1150px;
+    max-width: 96vw;
+}
+
+.table-container {
+    width: 95%;
+    margin: 25px auto 0 auto;
+    overflow-x: auto;
+    background: #ffffff;
+    border: 1px solid #9ab7d3;
+}
+
+.properties-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.properties-table th {
+    background: #cfe0f1; /* Light slate blue header */
+    color: #1d3557;
+    font-size: 14.5px;
+    font-weight: 700;
+    padding: 13px 18px;
+    text-align: center;
+    border: 1px solid #9ab7d3;
+}
+
+.properties-table td {
+    background: #ffffff;
+    color: #222222;
+    font-size: 14px;
+    padding: 12px 18px;
+    text-align: center;
+    border: 1px solid #cbd5e1;
+}
+
+.properties-table tbody tr {
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.properties-table tbody tr:hover {
+    background-color: #f0f4f9;
+}
+
+.properties-table tbody tr.selected-row td {
+    background-color: #b8d4f1 !important;
+    color: #0b2545 !important;
+    font-weight: 600;
+}
+
+.table-actions-row {
+    width: 95%;
+    margin: 30px auto 0 auto;
+    display: flex;
+    justify-content: flex-end; /* Buttons aligned to the right */
+    gap: 18px;
+}
+
+.table-action-btn {
+    height: 50px;
+    padding: 0 26px;
+    font-size: 14px;
+}
+
+
+/* ==========================================================================
+   FIGURES 5.4, 5.5, 5.6, 5.7: KEY-VALUE FORM LAYOUT
+   (Add Property, Complete Details, Edit Property, Change Password)
+   ========================================================================== */
+.window-form-screen {
+    width: 950px;
+    max-width: 95vw;
+}
+
+.kv-form-container {
+    max-width: 680px;
+    margin: 30px auto 10px auto;
+}
+
+.kv-form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.kv-label {
+    width: 220px;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #222222;
+    text-align: left;
+    padding-left: 15px;
+    flex-shrink: 0;
+}
+
+.kv-input-wrap {
+    flex: 1;
+}
+
+/* Radio button row */
+.kv-radio-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: 44px;
+}
+
+.radio-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14.5px;
+    color: #222222;
+    cursor: pointer;
+}
+
+.radio-item input[type="radio"] {
+    accent-color: #2563eb;
+    cursor: pointer;
+    width: 17px;
+    height: 17px;
+}
+
+/* Centered Form Action Button */
+.form-center-btn-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+    margin-bottom: 10px;
+}
+
+.form-action-btn {
+    height: 50px;
+    width: 140px;
+    font-size: 14.5px;
+}
+
+
+/* ==========================================================================
+   DESKTOP NATIVE DIALOG (JOptionPane style)
+   ========================================================================== */
+.modal-dialog-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-dialog-backdrop.active {
+    display: flex;
+}
+
+.desktop-dialog-window {
+    background: #eeeeee;
+    border: 1px solid #7b9cc0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    width: 400px;
+    animation: fadeInWindow 0.15s ease-out;
+}
+
+.dialog-titlebar {
+    background: #e2e8f0;
+    height: 30px;
+}
+
+.dialog-titlebar .titlebar-title {
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.dialog-content {
+    padding: 22px 26px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.dialog-icon-col {
+    flex-shrink: 0;
+}
+
+.dialog-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info-icon {
+    background: #bfdbfe;
+    color: #1d4ed8;
+}
+
+.error-icon {
+    background: #fecaca;
+    color: #b91c1c;
+}
+
+.dialog-message-col {
+    font-size: 14px;
+    color: #1f2937;
+    line-height: 1.5;
+    padding-top: 4px;
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: center;
+    padding: 0 20px 20px 20px;
+}
+
+.dialog-ok-btn {
+    height: 38px;
+    padding: 0 32px;
+    font-size: 13.5px;
+}
+
+
+/* ==========================================================================
+   RESPONSIVENESS (Maintains desktop look on all screens)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .desktop-workspace {
+        padding: 10px;
+    }
+
+    .window-body {
+        padding: 20px 15px;
+    }
+
+    .dashboard-content-split {
+        flex-direction: column;
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+    }
+
+    .kv-form-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .kv-label {
+        width: 100%;
+        text-align: left;
+        padding-left: 0;
+    }
+
+    .table-actions-row {
+        flex-direction: column;
+    }
+}
